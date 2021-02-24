@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  selector:
+    matchLabels:
+      app: simple
+      tier: backend
+      track: stable
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: simple
+        tier: backend
+        track: stable
+    spec:
+      containers:
+        - name: hello
+          image: "thirumurthi/simple-backend:v1"
+          ports:
+            - name: http
+              containerPort: 8080
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: simple-svc
+spec:
+  selector:
+    app: simple
+    tier: backend
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: http
