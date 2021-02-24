@@ -11,3 +11,5 @@
  
  There is a simple json response served by the backend, random number gnerated with a date the response created.
  
+Frontend :- has two docker file, multi-stage build. 
+  - with `npm install` and `npm ci` option.
