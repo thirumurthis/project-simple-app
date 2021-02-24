@@ -13,3 +13,10 @@
  
 Frontend :- has two docker file, multi-stage build. 
   - with `npm install` and `npm ci` option.
+
+Deploy the manifest to kubernetes using below commands
+```
+kubectl apply -f https://github.com/thirumurthis/project-simple-app/raw/main/backend.yaml
+
+kubectl apply -f https://github.com/thirumurthis/project-simple-app/raw/main/frontend.yaml
+```
