@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: "thirumurthi/simple-frontend:v2"
+          image: "thirumurthi/simple-frontend:v3"
           lifecycle:
             preStop:
               exec:
