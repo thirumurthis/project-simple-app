@@ -76,7 +76,8 @@ server {
 }
 ```
 - now reload the nginx config using `$ nginx -s reload` or `systemctl reload nginx.service` command.
-- if the docker port forwarding is used with 8080:80, from browser use `http://localhost:8080`, from curl within docker container use `curl http://127.0.0.1:80` to view the content.
+- if the docker port forwarding is used with 8080:80, from browser use `http://localhost:8080`.
+- within docker container use `curl http://127.0.0.1:80` to view the content.
 
 Response in the browser
 ![image](https://user-images.githubusercontent.com/6425536/109375449-a6341200-7871-11eb-9c19-4f46149ecee4.png)
