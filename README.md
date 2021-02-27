@@ -20,13 +20,18 @@ kubectl apply -f https://github.com/thirumurthis/project-simple-app/raw/main/bac
 
 kubectl apply -f https://github.com/thirumurthis/project-simple-app/raw/main/frontend.yaml
 ```
+-----
+#### With docker running
+  - if the backend project is started with the port forward of 8081.
+  - in the environment.prod.ts, adding baseURL as http://localhost:8081/v1 will access the exposed docker backend service.
 
------------------
-To test the angular app locally,
+-----
+To test the angular app locally, below is how to pass JSON from the nginx server
+
 - Update the environment.prod.ts, to ` baseURL : "./v1" `(if not updated)
 - build the angluar app using 
 ```
-$ npm run build --prod
+$ npm run build -- --prod
 
 ## The artifacts gets build at "dist/simple-app" in this case
 
