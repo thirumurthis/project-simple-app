@@ -61,6 +61,9 @@ kubectl apply -f https://github.com/thirumurthis/project-simple-app/raw/main/fro
   - Once deployed, use `kubectl get svc` to get the ExpternalIP for the frotnend.
   - Once IP is obtained, use the `curl http://<ExternalIp>:80/v1/message` to fetch the backend service message. 
 
+##### Sample of the output (when using katacoda)
+
+![image](https://user-images.githubusercontent.com/6425536/109412628-e07add80-795d-11eb-95e1-d80f87e44c73.png)
 
 #### In case if we need to use the frontend service needs to access the backend service and display the recived message.
   - the backend project deployed with the backend service needs to be of type LoadBalancer type, this needs to be exposed so can be accessed outside the cluster.
