@@ -17,8 +17,11 @@ Frontend :- has two docker file, multi-stage build.
 Deploy the manifest to kubernetes using below commands
 ```
 kubectl apply -f https://github.com/thirumurthis/project-simple-app/raw/main/backend.yaml
+kubectl apply -f https://github.com/thirumurthis/project-simple-app/raw/main/backend-svc.yaml
 
 kubectl apply -f https://github.com/thirumurthis/project-simple-app/raw/main/frontend.yaml
+kubectl apply -f https://github.com/thirumurthis/project-simple-app/raw/main/frontend-svc.yaml
+
 ```
 -----
 #### With docker running
