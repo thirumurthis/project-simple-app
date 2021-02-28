@@ -1,12 +1,46 @@
 #### project-simple-app
 
 - This is a simple project with 
-   - Frontend developed using Angular
-   - backend developed using Spring-boot.
+   - Frontend developed using Angular, running on nginx image. (which access the backend service)
+   - backend developed using Spring-boot. 
  
- both the project contains Dockerfile, to deploy in the local kubernetes cluster.
- 
- backend service, can be accessed with API `http://localhost:8080/v1/message` if deployed in localhost
+#### Frontend project accessing the Backend serivice from Docker.
+  - In docker, run both the containers
+    - Before running the docker, update docker environment.prod.ts or environment.ts => `baseURL : http://localhost:8081/v1`
+      - run frontend using `docker run --name frontend --port 8080:80 -v C:/thiru/nginx-101/:/var/work/ thirumurthi/frontend:v3`
+    - run backend using `docker run --name backend --port 8081:80 thirumurthi/backend:v1`
+
+#### with updated nginx configuration, we can access the backend service using the service name.
+  - in this approach update the nginx configuration as below
+  ```
+  upstream Backend {
+    # backend is the internal DNS name used by the backend Service inside Kubernetes
+    server backend;
+  }
+
+server {
+    listen 8080;
+    location / {
+        # The following statement will proxy traffic to the upstream named Backend
+        proxy_pass http://Backend/;
+        access_log /var/log/nginx/simple.access.log;
+        error_log /var/log/nginx/simple.error.log;
+     }
+  }
+  ```
+  - This needs to be copied to the `/etc/nginx/conf.d/` location
+```
+kubectl apply -f https://github.com/thirumurthis/project-simple-app/raw/main/backend.yaml
+kubectl apply -f https://github.com/thirumurthis/project-simple-app/raw/main/backend-svc.yaml
+
+kubectl apply -f https://github.com/thirumurthis/project-simple-app/raw/main/frontend.yaml
+kubectl apply -f https://github.com/thirumurthis/project-simple-app/raw/main/frontend-svc.yaml
+```
+  - Now, `kubectl get svc` for the frotnend provides the external ip, which can be used to access the backend application
+
+
+#### In docker application
+  - backend service, can be accessed with API `http://localhost:8080/v1/message` if deployed in localhost
  frontend service, will access the backend service, and display the response.
  
  There is a simple json response served by the backend, random number gnerated with a date the response created.
@@ -14,22 +48,8 @@
 Frontend :- has two docker file, multi-stage build. 
   - with `npm install` and `npm ci` option.
 
-Deploy the manifest to kubernetes using below commands
-```
-kubectl apply -f https://github.com/thirumurthis/project-simple-app/raw/main/backend.yaml
-kubectl apply -f https://github.com/thirumurthis/project-simple-app/raw/main/backend-svc.yaml
-
-kubectl apply -f https://github.com/thirumurthis/project-simple-app/raw/main/frontend.yaml
-kubectl apply -f https://github.com/thirumurthis/project-simple-app/raw/main/frontend-svc.yaml
-
-```
 -----
-#### With docker running
-  - if the backend project is started with the port forward of 8081.
-  - in the environment.prod.ts, adding baseURL as http://localhost:8081/v1 will access the exposed docker backend service.
-
------
-To test the angular app locally, below is how to pass JSON from the nginx server
+To test the angular app locally in the nginx server, below is way to pass JSON from the nginx server config
 
 - Update the environment.prod.ts, to ` baseURL : "./v1" `(if not updated)
 - build the angluar app using 
