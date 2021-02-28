@@ -1,0 +1,14 @@
+
+<h3>Response:</h3> 
+<div>Data:</div>
+<div *ngIf="message">
+<ul >
+<li *ngFor= "let msg of message.data">{{msg}}</li>
+</ul>
+<div><span>transactionId:  </span>
+  {{message.transactionId}}
+</div>
+<br/>
+<div><span>Message Recived at : </span>{{message.date | date: 'short' }}</div>
+</div>
+<router-outlet></router-outlet>
