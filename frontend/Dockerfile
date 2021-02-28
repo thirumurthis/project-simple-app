@@ -1,0 +1,12 @@
+FROM node:15.9.0-alpine as build-step
+COPY package.json package-lock.json ./
+RUN npm ci && mkdir -p /app && mv ./node_modules ./app
+WORKDIR /app
+COPY . .
+
+RUN npm run build -- --prod --output-path=dist
+
+FROM nginx:1.19.7-alpine
+COPY --from=build-step app/dist /usr/share/nginx/html
+COPY nginx_allow.conf /etc/nginx/conf.d/default.conf
+EXPOSE 80
