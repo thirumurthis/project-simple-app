@@ -24,17 +24,3 @@ spec:
             preStop:
               exec:
                 command: ["/usr/sbin/nginx","-s","quit"]
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: frontend
-spec:
-  selector:
-    app: simple
-    tier: frontend
-  ports:
-  - protocol: "TCP"
-    port: 80
-    targetPort: 80
-  type: LoadBalancer
