@@ -54,14 +54,14 @@ kubectl apply -f https://github.com/thirumurthis/project-simple-app/raw/main/bac
 
 ## this uses the frontend:v2 where the frontend acts as a proxy
 kubectl apply -f https://github.com/thirumurthis/project-simple-app/raw/main/frontend.yaml
-## below uses service of type loadbalancer, (Note: using the katacoda kubernetes platform works)
+## below uses service of type loadbalancer, (Note: using the kataKoda kubernetes platform works)
 kubectl apply -f https://github.com/thirumurthis/project-simple-app/raw/main/frontend-svc.yaml
 ```
 
   - Once deployed, use `kubectl get svc` to get the ExpternalIP for the frotnend.
   - Once IP is obtained, use the `curl http://<ExternalIp>:80/v1/message` to fetch the backend service message. 
 
-##### Sample of the output (when using katacoda)
+##### Sample of the output (when using katakoda)
 
 ![image](https://user-images.githubusercontent.com/6425536/109412628-e07add80-795d-11eb-95e1-d80f87e44c73.png)
 
